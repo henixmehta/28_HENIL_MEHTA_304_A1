@@ -46,7 +46,7 @@ const server = http.createServer((req, res) => {
     res.end("Hello NodeJS !!");
 
   } else {
-    res.writeHead(404);
+    res.writeHead(404); 
     res.end("Not Found");
   }
 });
