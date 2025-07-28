@@ -19,14 +19,19 @@ const server = http.createServer((req, res) => {
 
   const ext = path.extname(filePath);
   const constentType = minetype[ext] || "text/plain";
+
   fs.readFile(filePath, (err, content) => {
     if (err) {
-      res.end("not Found");
+      // send error only once
+      res.writeHead(404, { "Content-Type": "text/plain" });
+      res.end("Not Found");
+    } else {
+      res.writeHead(200, { "Content-Type": constentType });
+      res.end(content);
     }
-    res.writeHead(200, { "content-type": constentType });
-    res.end(content);
   });
 });
-server.listen(port, (req, res) => {
+
+server.listen(port, () => {
   console.log(`Listen Port ${port}`);
 });
